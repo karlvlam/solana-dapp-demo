@@ -74,6 +74,13 @@ export const AppBar: React.FC = () => {
             href="/address-lookup-table"
             navigationStarts={() => setIsNavOpen(false)}
           />
+          <NavElement
+            label="Call Program Math"
+            href="/call-program-math"
+            navigationStarts={() => setIsNavOpen(false)}
+          />
+
+
 
 
           <WalletMultiButtonDynamic className="btn-ghost btn-sm rounded-btn text-lg mr-6 " />
