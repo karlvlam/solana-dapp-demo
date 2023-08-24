@@ -20,7 +20,7 @@ export const SendSol: FC = ({ transferAmount, addresses, lookupTableAddress }) =
         const transferLamport = Math.round(transferAmount * LAMPORTS_PER_SOL);
         let lookupTableAccount = null;
         if (lookupTableAddress.trim() !== ''){
-          lookupTableAddress = await connection.getAddressLookupTable(  new PublicKey( lookupTableAddress.trim() ) ); 
+          lookupTableAccount = await connection.getAddressLookupTable(  new PublicKey( lookupTableAddress.trim() ) ); 
         }
 
         console.log('lamports:', transferLamport);
@@ -48,7 +48,7 @@ export const SendSol: FC = ({ transferAmount, addresses, lookupTableAddress }) =
             // Create a new TransactionMessage with version and compile it to legacy
 
             let message = null;
-            if (!lookupTableAddress){
+            if (!lookupTableAccount){
                 message = new TransactionMessage({
                     payerKey: publicKey,
                     recentBlockhash: latestBlockhash.blockhash,
@@ -60,7 +60,7 @@ export const SendSol: FC = ({ transferAmount, addresses, lookupTableAddress }) =
                     payerKey: publicKey,
                     recentBlockhash: latestBlockhash.blockhash,
                     instructions,
-                }).compileToV0Message([lookupTableAddress.value]);
+                }).compileToV0Message([lookupTableAccount.value]);
                 console.log('V0 Tx');
             }
 
