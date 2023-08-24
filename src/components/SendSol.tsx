@@ -1,31 +1,38 @@
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { Keypair, SystemProgram, Transaction, TransactionMessage, TransactionSignature, VersionedTransaction } from '@solana/web3.js';
+import { Keypair, SystemProgram, Transaction, TransactionMessage, TransactionSignature, VersionedTransaction, PublicKey } from '@solana/web3.js';
 import { FC, useCallback } from 'react';
+import * as ra from 'react';
 import { notify } from "../utils/notifications";
 
-export const SendTransaction: FC = () => {
+export const SendSol: FC = ({ addresses }) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
 
     const onClick = useCallback(async () => {
         if (!publicKey) {
             notify({ type: 'error', message: `Wallet not connected!` });
-            console.log('error', `Send Transaction: Wallet not connected!`);
+            console.log('error', `Send Sol: Wallet not connected!`);
             return;
         }
 
+        const addressList = addresses.split(/\s/).filter(addr => addr !== '');
+        console.log('addresses:', addressList);
+
         let signature: TransactionSignature = '';
+        const instructions = [];
         try {
 
             // Create instructions to send, in this case a simple transfer
-            const instructions = [
-                SystemProgram.transfer({
-                    fromPubkey: publicKey,
-                    toPubkey: Keypair.generate().publicKey,
-                    lamports: 1_000_000,
-                }),
-            ];
 
+            addressList.map(addr => {
+              let inst = SystemProgram.transfer({
+                    fromPubkey: publicKey,
+                    toPubkey: new PublicKey(addr),
+                    lamports: 1_000_000,
+                });
+              instructions.push(inst)
+            });
+         
             // Get the lates block hash to use on our transaction and confirmation
             let latestBlockhash = await connection.getLatestBlockhash()
 
@@ -52,7 +59,7 @@ export const SendTransaction: FC = () => {
             console.log('error', `Transaction failed! ${error?.message}`, signature);
             return;
         }
-    }, [publicKey, notify, connection, sendTransaction]);
+    }, [publicKey, notify, connection, sendTransaction, addresses]);
 
     return (
         <div className="flex flex-row justify-center">
