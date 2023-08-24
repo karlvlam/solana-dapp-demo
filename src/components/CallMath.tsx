@@ -5,7 +5,7 @@ import * as ra from 'react';
 import { notify } from "../utils/notifications";
 import { lookup } from 'dns';
 
-export const CallMath: FC = ({ a,b}) => {
+export const CallMath: FC = ({ a,b}:any) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
 

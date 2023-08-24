@@ -8,7 +8,7 @@ import * as ra from 'react';
 import { notify } from "../utils/notifications";
 import { lookup } from 'dns';
 
-export const ExtendAddressLookupTable: FC = ({lookupTableAddress, extendAddresses}) => {
+export const ExtendAddressLookupTable: FC = ({lookupTableAddress, extendAddresses}:any) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
 
@@ -37,7 +37,7 @@ export const ExtendAddressLookupTable: FC = ({lookupTableAddress, extendAddresse
          
             // Get the lates block hash to use on our transaction and confirmation
 
-            let {blockhash} = await connection.getLatestBlockhash()
+            let latestBlockhash = await connection.getLatestBlockhash()
 
             const lookupTableInst = AddressLookupTableProgram.extendLookupTable({
                 authority: publicKey,
@@ -48,7 +48,7 @@ export const ExtendAddressLookupTable: FC = ({lookupTableAddress, extendAddresse
 
             let messageTxn = new TransactionMessage({
               payerKey: publicKey,
-              recentBlockhash: blockhash,
+              recentBlockhash: latestBlockhash.blockhash,
               instructions: [lookupTableInst],
             }).compileToV0Message();
 
@@ -59,7 +59,7 @@ export const ExtendAddressLookupTable: FC = ({lookupTableAddress, extendAddresse
             signature = await sendTransaction(transation, connection);
 
             // Send transaction and await for signature
-            await connection.confirmTransaction({ signature, ...blockhash}, 'confirmed');
+            await connection.confirmTransaction({ signature, ...latestBlockhash}, 'confirmed');
 
             console.log(signature);
             console.log('Extend Lookup Table:', lookupTableAddress);

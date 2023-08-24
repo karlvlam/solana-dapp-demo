@@ -25,7 +25,7 @@ export const CreateAddressLookupTable: FC = ({}) => {
             // Get the lates block hash to use on our transaction and confirmation
 
             let slot = await connection.getSlot();
-            let {blockhash} = await connection.getLatestBlockhash()
+            let latestBlockhash = await connection.getLatestBlockhash()
 
             const [lookupTableInst, lookupTableAddress] = AddressLookupTableProgram.createLookupTable({
                 authority: publicKey,
@@ -35,7 +35,7 @@ export const CreateAddressLookupTable: FC = ({}) => {
 
             let message = new TransactionMessage({
               payerKey: publicKey,
-              recentBlockhash: blockhash,
+              recentBlockhash: latestBlockhash.blockhash,
               instructions: [lookupTableInst],
             }).compileToV0Message();
 
@@ -46,7 +46,7 @@ export const CreateAddressLookupTable: FC = ({}) => {
             signature = await sendTransaction(transation, connection);
 
             // Send transaction and await for signature
-            await connection.confirmTransaction({ signature, ...blockhash}, 'confirmed');
+            await connection.confirmTransaction({ signature, ...latestBlockhash }, 'confirmed');
 
             console.log(signature);
             console.log('New Lookup Table:', lookupTableAddress.toBase58());
