@@ -3,8 +3,9 @@ import { Keypair, SystemProgram, Transaction, TransactionMessage, TransactionSig
 import { FC, useCallback } from 'react';
 import * as ra from 'react';
 import { notify } from "../utils/notifications";
+import { lookup } from 'dns';
 
-export const SendSol: FC = ({ transferAmount, addresses }) => {
+export const SendSol: FC = ({ transferAmount, addresses, lookupTableAddress }) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
 
@@ -17,8 +18,14 @@ export const SendSol: FC = ({ transferAmount, addresses }) => {
 
         const addressList = addresses.split(/\s/).filter(addr => addr !== '');
         const transferLamport = Math.round(transferAmount * LAMPORTS_PER_SOL);
+        let lookupTableAccount = null;
+        if (lookupTableAddress.trim() !== ''){
+          lookupTableAddress = await connection.getAddressLookupTable(  new PublicKey( lookupTableAddress.trim() ) ); 
+        }
+
         console.log('lamports:', transferLamport);
         console.log('addresses:', addressList);
+        console.log('lookupTable:', lookupTableAddress);
 
         let signature: TransactionSignature = '';
         const instructions = [];
@@ -39,14 +46,26 @@ export const SendSol: FC = ({ transferAmount, addresses }) => {
             let latestBlockhash = await connection.getLatestBlockhash()
 
             // Create a new TransactionMessage with version and compile it to legacy
-            const messageLegacy = new TransactionMessage({
-                payerKey: publicKey,
-                recentBlockhash: latestBlockhash.blockhash,
-                instructions,
-            }).compileToLegacyMessage();
+
+            let message = null;
+            if (!lookupTableAddress){
+                message = new TransactionMessage({
+                    payerKey: publicKey,
+                    recentBlockhash: latestBlockhash.blockhash,
+                    instructions,
+                }).compileToLegacyMessage();
+                console.log('Legacy Tx');
+            }else{
+                message = new TransactionMessage({
+                    payerKey: publicKey,
+                    recentBlockhash: latestBlockhash.blockhash,
+                    instructions,
+                }).compileToV0Message([lookupTableAddress.value]);
+                console.log('V0 Tx');
+            }
 
             // Create a new VersionedTransacction which supports legacy and v0
-            const transation = new VersionedTransaction(messageLegacy)
+            const transation = new VersionedTransaction(message);
 
             // Send transaction and await for signature
             signature = await sendTransaction(transation, connection);
@@ -61,7 +80,7 @@ export const SendSol: FC = ({ transferAmount, addresses }) => {
             console.log('error', `Transaction failed! ${error?.message}`, signature);
             return;
         }
-    }, [publicKey, notify, connection, sendTransaction, addresses, transferAmount]);
+    }, [publicKey, notify, connection, sendTransaction, addresses, transferAmount, lookupTableAddress]);
 
     return (
         <div className="flex flex-row justify-center">

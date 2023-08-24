@@ -28,6 +28,7 @@ export const SolTransferView: FC = ({ }) => {
 
   const [transferAddresses, setTransferAddresses] = useState('');
   const [transferAmount, setTransferAmount] = useState('0.000001');
+  const [lookupTable, setLookupTable] = useState('');
  
   return (
 
@@ -49,18 +50,25 @@ export const SolTransferView: FC = ({ }) => {
           </div>
           }
           </h4>
-          <SendSol addresses={transferAddresses} transferAmount={transferAmount} />
+          <SendSol addresses={transferAddresses} transferAmount={transferAmount} lookupTableAddress={lookupTable} />
         </div>
         <div className="relative group">
             <div className="max-w-md mx-auto mockup-code bg-primary border-2 border-[#5252529f] p-6 px-10 my-2">
-            Amount (SOL): <input 
-            type="text" 
-            value={transferAmount} 
-            onChange={e => { setTransferAmount(e.target.value) } }
-            className="max-w-md mx-auto mockup-code bg-primary"
+            <strong>Amount (SOL):</strong> <input 
+              type="text" 
+              value={transferAmount} 
+              onChange={e => { setTransferAmount(e.target.value) } }
+              className="max-w-md mx-auto mockup-code bg-primary"
             />
             <br/>
-            Target Wallet(s):
+            <strong>Lookup Table (optional): </strong><textarea
+              value={lookupTable} 
+              onChange={e => { setLookupTable(e.target.value) } }
+              className="max-w-md mx-auto mockup-code bg-primary" rows="2" cols="30"
+            />
+            <br/>
+
+            <strong>Target Wallet(s):</strong>
             <textarea value={transferAddresses} 
               onChange={e => { setTransferAddresses(e.target.value) } } 
               className="max-w-md mx-auto mockup-code bg-primary" rows="10" cols="30"/>
