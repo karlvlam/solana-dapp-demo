@@ -1,10 +1,10 @@
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { Keypair, SystemProgram, Transaction, TransactionMessage, TransactionSignature, VersionedTransaction, PublicKey } from '@solana/web3.js';
+import { Keypair, SystemProgram, Transaction, TransactionMessage, TransactionSignature, VersionedTransaction, PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { FC, useCallback } from 'react';
 import * as ra from 'react';
 import { notify } from "../utils/notifications";
 
-export const SendSol: FC = ({ addresses }) => {
+export const SendSol: FC = ({ transferAmount, addresses }) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
 
@@ -16,6 +16,8 @@ export const SendSol: FC = ({ addresses }) => {
         }
 
         const addressList = addresses.split(/\s/).filter(addr => addr !== '');
+        const transferLamport = Math.round(transferAmount * LAMPORTS_PER_SOL);
+        console.log('lamports:', transferLamport);
         console.log('addresses:', addressList);
 
         let signature: TransactionSignature = '';
@@ -28,7 +30,7 @@ export const SendSol: FC = ({ addresses }) => {
               let inst = SystemProgram.transfer({
                     fromPubkey: publicKey,
                     toPubkey: new PublicKey(addr),
-                    lamports: 1_000_000,
+                    lamports: transferLamport,
                 });
               instructions.push(inst)
             });
@@ -59,7 +61,7 @@ export const SendSol: FC = ({ addresses }) => {
             console.log('error', `Transaction failed! ${error?.message}`, signature);
             return;
         }
-    }, [publicKey, notify, connection, sendTransaction, addresses]);
+    }, [publicKey, notify, connection, sendTransaction, addresses, transferAmount]);
 
     return (
         <div className="flex flex-row justify-center">

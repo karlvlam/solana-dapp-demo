@@ -27,6 +27,7 @@ export const SolTransferView: FC = ({ }) => {
   }, [wallet.publicKey, connection, getUserSOLBalance])
 
   const [transferAddresses, setTransferAddresses] = useState('');
+  const [transferAmount, setTransferAmount] = useState('0.000001');
  
   return (
 
@@ -48,13 +49,21 @@ export const SolTransferView: FC = ({ }) => {
           </div>
           }
           </h4>
-          <SendSol addresses={transferAddresses} />
+          <SendSol addresses={transferAddresses} transferAmount={transferAmount} />
         </div>
         <div className="relative group">
             <div className="max-w-md mx-auto mockup-code bg-primary border-2 border-[#5252529f] p-6 px-10 my-2">
+            Amount (SOL): <input 
+            type="text" 
+            value={transferAmount} 
+            onChange={e => { setTransferAmount(e.target.value) } }
+            className="max-w-md mx-auto mockup-code bg-primary"
+            />
+            <br/>
             Target Wallet(s):
             <textarea value={transferAddresses} 
-              onChange={e => { setTransferAddresses(e.target.value) } } className="max-w-md mx-auto mockup-code bg-primary" rows="10" cols="30"/>
+              onChange={e => { setTransferAddresses(e.target.value) } } 
+              className="max-w-md mx-auto mockup-code bg-primary" rows="10" cols="30"/>
             </div>
         </div>
 
