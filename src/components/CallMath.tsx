@@ -71,7 +71,7 @@ export const CallMath: FC = ({ a,b}) => {
                         Wallet not connected
                         </div>
                          <span className="block group-disabled:hidden" >
-                           Call Program "Math" 
+                           Call Program Math 
                         </span>
                     </button>
              </div>
