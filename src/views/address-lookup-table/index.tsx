@@ -7,6 +7,7 @@ import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 
 // Components
 import { CreateAddressLookupTable } from '../../components/CreateAddressLookupTable';
+import { ExtendAddressLookupTable } from '../../components/ExtendAddressLookupTable';
 import pkg from '../../../package.json';
 
 
@@ -21,9 +22,8 @@ export const AddressLookupTableView: FC = ({ }) => {
     }
   }, [wallet.publicKey, connection])
 
-  const [transferAddresses, setTransferAddresses] = useState('');
-  const [transferAmount, setTransferAmount] = useState('0.000001');
   const [lookupTable, setLookupTable] = useState('');
+  const [extendAddresses, setExtendAddresses] = useState('');
  
   return (
 
@@ -43,27 +43,21 @@ export const AddressLookupTableView: FC = ({ }) => {
           </div>
           }
           </h4>
-          <CreateAddressLookupTable  />
+          <CreateAddressLookupTable />
+          <ExtendAddressLookupTable lookupTableAddress={lookupTable} extendAddresses={extendAddresses} />
         </div>
         <div className="relative group">
             <div className="max-w-md mx-auto mockup-code bg-primary border-2 border-[#5252529f] p-6 px-10 my-2">
-            <strong>Amount (SOL):</strong> <input 
-              type="text" 
-              value={transferAmount} 
-              onChange={e => { setTransferAmount(e.target.value) } }
-              className="max-w-md mx-auto mockup-code bg-primary"
-            />
-            <br/>
-            <strong>Lookup Table (optional): </strong><textarea
+            <strong>Lookup Table: </strong><textarea
               value={lookupTable} 
               onChange={e => { setLookupTable(e.target.value) } }
               className="max-w-md mx-auto mockup-code bg-primary" rows="2" cols="30"
             />
             <br/>
 
-            <strong>Target Wallet(s):</strong>
-            <textarea value={transferAddresses} 
-              onChange={e => { setTransferAddresses(e.target.value) } } 
+            <strong>Extend Address(s):</strong>
+            <textarea value={extendAddresses} 
+              onChange={e => { setExtendAddresses(e.target.value) } } 
               className="max-w-md mx-auto mockup-code bg-primary" rows="10" cols="30"/>
             </div>
         </div>
