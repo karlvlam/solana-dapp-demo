@@ -69,6 +69,12 @@ export const AppBar: React.FC = () => {
             href="/sol-transfer"
             navigationStarts={() => setIsNavOpen(false)}
           />
+          <NavElement
+            label="Address Lookup Table"
+            href="/address-lookup-table"
+            navigationStarts={() => setIsNavOpen(false)}
+          />
+
 
           <WalletMultiButtonDynamic className="btn-ghost btn-sm rounded-btn text-lg mr-6 " />
         </div>
