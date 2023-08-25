@@ -5,7 +5,7 @@ import * as ra from 'react';
 import { notify } from "../utils/notifications";
 import { lookup } from 'dns';
 
-export const SendSol: FC = ({ transferAmount, addresses, lookupTableAddress }:any) => {
+export const SendSol: FC<{ transferAmount:string, addresses:string, lookupTableAddress:string }> = ({ transferAmount, addresses, lookupTableAddress }) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
 
@@ -17,7 +17,7 @@ export const SendSol: FC = ({ transferAmount, addresses, lookupTableAddress }:an
         }
 
         const addressList = addresses.split(/\s/).filter(addr => addr !== '');
-        const transferLamport = Math.round(transferAmount * LAMPORTS_PER_SOL);
+        const transferLamport = Math.round(parseFloat(transferAmount) * LAMPORTS_PER_SOL);
         let lookupTableAccount = null;
         if (lookupTableAddress.trim() !== ''){
           lookupTableAccount = await connection.getAddressLookupTable(  new PublicKey( lookupTableAddress.trim() ) ); 

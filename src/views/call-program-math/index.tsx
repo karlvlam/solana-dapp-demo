@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 
 // Components
-import { CallMath } from '../../components/CallMath.tsx';
+import { CallMath } from '../../components/CallMath';
 import pkg from '../../../package.json';
 
 

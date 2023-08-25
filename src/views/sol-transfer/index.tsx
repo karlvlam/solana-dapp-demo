@@ -64,14 +64,14 @@ export const SolTransferView: FC = ({ }) => {
             <strong>Lookup Table (optional): </strong><textarea
               value={lookupTable} 
               onChange={e => { setLookupTable(e.target.value) } }
-              className="max-w-md mx-auto mockup-code bg-primary" rows="2" cols="30"
+              className="max-w-md mx-auto mockup-code bg-primary" rows={2} cols={30}
             />
             <br/>
 
             <strong>Target Wallet(s):</strong>
             <textarea value={transferAddresses} 
               onChange={e => { setTransferAddresses(e.target.value) } } 
-              className="max-w-md mx-auto mockup-code bg-primary" rows="10" cols="30"/>
+              className="max-w-md mx-auto mockup-code bg-primary" rows={10} cols={30}/>
             </div>
         </div>
 

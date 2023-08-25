@@ -51,14 +51,14 @@ export const AddressLookupTableView: FC = ({ }) => {
             <strong>Lookup Table: </strong><textarea
               value={lookupTable} 
               onChange={e => { setLookupTable(e.target.value) } }
-              className="max-w-md mx-auto mockup-code bg-primary" rows="2" cols="30"
+              className="max-w-md mx-auto mockup-code bg-primary" rows={2} cols={30}
             />
             <br/>
 
             <strong>Extend Address(s):</strong>
             <textarea value={extendAddresses} 
               onChange={e => { setExtendAddresses(e.target.value) } } 
-              className="max-w-md mx-auto mockup-code bg-primary" rows="10" cols="30"/>
+              className="max-w-md mx-auto mockup-code bg-primary" rows={10} cols={30}/>
             </div>
         </div>
 

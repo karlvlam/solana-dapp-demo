@@ -8,7 +8,7 @@ import * as ra from 'react';
 import { notify } from "../utils/notifications";
 import { lookup } from 'dns';
 
-export const ExtendAddressLookupTable: FC = ({lookupTableAddress, extendAddresses}:any) => {
+export const ExtendAddressLookupTable: FC<{lookupTableAddress:string, extendAddresses:string}> = ({lookupTableAddress, extendAddresses}) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
 
