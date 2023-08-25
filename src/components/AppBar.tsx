@@ -48,6 +48,7 @@ export const AppBar: React.FC = () => {
             </Link>
           </div>
           <WalletMultiButtonDynamic className="btn-ghost btn-sm relative flex md:hidden text-lg " />
+          <div>&nbsp; This is a demo project for <b>DEVNET</b> only.</div>
         </div>
 
         {/* Nav Links */}
