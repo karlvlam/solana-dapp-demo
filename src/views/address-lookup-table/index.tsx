@@ -32,6 +32,7 @@ export const AddressLookupTableView: FC = ({ }) => {
         <div className='mt-6'>
         <h1 className="text-center text-5xl md:pl-12 font-bold text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 to-fuchsia-500 mb-4">Address Lookup Table</h1>
         </div>
+        <div>Prepare your own address lookup table.</div>
                 <div className="flex flex-col mt-2">
           <h4 className="md:w-full text-2xl text-slate-300 my-2">
           {wallet &&

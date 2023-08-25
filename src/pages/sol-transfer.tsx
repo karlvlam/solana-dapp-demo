@@ -9,7 +9,7 @@ const SolTransfer: NextPage = (props) => {
         <title>Sol Transfer</title>
         <meta
           name="description"
-          content="Solana Scaffold"
+          content="Sol Transfer"
         />
       </Head>
       <SolTransferView />

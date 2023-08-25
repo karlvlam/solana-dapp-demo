@@ -36,6 +36,8 @@ export const SolTransferView: FC = ({ }) => {
       <div className="md:hero-content flex flex-col">
         <div className='mt-6'>
         <h1 className="text-center text-5xl md:pl-12 font-bold text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 to-fuchsia-500 mb-4">Sol Transfer        </h1>
+        <div>Send SOL to multiple addresses in a single transaction.</div>
+        <div> An address lookup table can be used to reduce the transaction size.</div>
         </div>
                 <div className="flex flex-col mt-2">
           <h4 className="md:w-full text-2xl text-slate-300 my-2">

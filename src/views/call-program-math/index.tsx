@@ -31,6 +31,9 @@ export const CallProgramMathView: FC = ({ }) => {
         <div className='mt-6'>
         <h1 className="text-center text-5xl md:pl-12 font-bold text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 to-fuchsia-500 mb-4">Call Program Math</h1>
         </div>
+        <div>What should be a + b ?</div>
+        <div>Both a and b are 64-bit floating point variables.</div>
+        <div> The solana program takes 128 bits(or 16 bytes) as instruction data. The first 8 bytes for a and the other 8 bytes for b.</div>
                 <div className="flex flex-col mt-2">
           <h4 className="md:w-full text-2xl text-slate-300 my-2">
           {wallet &&
