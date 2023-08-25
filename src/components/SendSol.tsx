@@ -5,7 +5,13 @@ import * as ra from 'react';
 import { notify } from "../utils/notifications";
 import { lookup } from 'dns';
 
-export const SendSol: FC<{ transferAmount:string, addresses:string, lookupTableAddress:string }> = ({ transferAmount, addresses, lookupTableAddress }) => {
+type MyProps = {
+  transferAmount:string, 
+  addresses:string, 
+  lookupTableAddress:string
+}
+
+export const SendSol: FC<MyProps> = ({ transferAmount, addresses, lookupTableAddress }) => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
 
