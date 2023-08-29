@@ -80,6 +80,11 @@ export const AppBar: React.FC = () => {
             href="/call-program-math"
             navigationStarts={() => setIsNavOpen(false)}
           />
+          <NavElement
+            label="Call Program PDA"
+            href="/call-program-pda"
+            navigationStarts={() => setIsNavOpen(false)}
+          />
 
 
 
