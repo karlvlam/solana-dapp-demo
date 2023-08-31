@@ -29,7 +29,7 @@ const PdaDepositSol: FC<MyProps> = ({ amount }) => {
         let bufLamport:Buffer = Buffer.alloc(8);
         let lamport = BigInt(Math.round(parseFloat(amount) * LAMPORTS_PER_SOL));
 
-        bufLamport.writeBigInt64BE(lamport);
+        bufLamport.writeBigInt64LE(lamport);
 
         let seeds = [Buffer.from('acc-'), publicKey.toBuffer()];
         let [pda_pubkey, bump] = PublicKey.findProgramAddressSync(seeds, new PublicKey(PROGRAM_ID) );
@@ -126,7 +126,7 @@ const PdaWithdrawSol: FC<MyProps> = ({ amount }) => {
         let bufLamport:Buffer = Buffer.alloc(8);
         let lamport = BigInt(Math.round(parseFloat(amount) * LAMPORTS_PER_SOL));
 
-        bufLamport.writeBigInt64BE(lamport);
+        bufLamport.writeBigInt64LE(lamport);
 
         let seeds = [Buffer.from('acc-'), publicKey.toBuffer()];
         let [pda_pubkey, bump] = PublicKey.findProgramAddressSync(seeds, new PublicKey(PROGRAM_ID) );
